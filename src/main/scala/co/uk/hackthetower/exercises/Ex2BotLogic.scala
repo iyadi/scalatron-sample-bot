@@ -1,8 +1,8 @@
 package co.uk.hackthetower.exercises
 
 import cats.data.Xor
-import co.uk.hackthetower.commands.bot.BotCommands
-import co.uk.hackthetower.commands.server.ServerCommand
+import co.uk.hackthetower.commands.bot._
+import co.uk.hackthetower.commands.server.{React, Goodbye, Welcome, ServerCommand}
 
 /**
   * Second exercise: Implement method 'processServerCommand'
@@ -29,5 +29,20 @@ import co.uk.hackthetower.commands.server.ServerCommand
   */
 object Ex2BotLogic {
 
-  def processServerCommand(command: Xor[String, ServerCommand]): Xor[String, List[BotCommands]] = Xor.left("Not sure what to do")
+  def processServerCommand(command: Xor[String, ServerCommand]): Xor[String, List[BotCommands]] = {
+    println(s"Received command ${command}")
+    command.fold(
+      x => {
+        println(s"Received invalid input $x")
+        Xor.left("try again")
+      },
+      serverCommand => serverCommand match {
+        case w:Welcome => Xor.right(List(Say("hi")))
+        case g:Goodbye => Xor.left("Bye")
+        case r:React   => Xor.right(List(Move(5,5)))
+        case  _        => Xor.right(List(Say(s"Do understand command ${command}")))
+      }
+    )
+
+  }
 }

@@ -9,5 +9,6 @@ assemblyJarName in assembly := "ScalatronBot.jar"
 libraryDependencies ++= Seq(
   "org.typelevel" %% "cats" % "0.4.1",
   "org.scalactic" %% "scalactic" % "2.2.6",
-  "org.scalatest" %% "scalatest" % "2.2.6" % "test"
+  "org.scalatest" %% "scalatest" % "2.2.6" % "test",
+  "com.lihaoyi" %% "upickle" % "0.3.8"
 )
